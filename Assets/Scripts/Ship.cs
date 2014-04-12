@@ -18,11 +18,11 @@ public class Ship : MonoBehaviour {
 	public Transform reticule;
 
 	public float aimReticuleSpeed; // In Degrees
+	public float aimRadius;
+	public Vector2 aimUnits;
 
 	private Vector3 camPos;
-	private Vector3 retPos;
 	private Quaternion camRot;
-	private Quaternion retRot;
 	private float speed;
 	private Vector2 aimAngle;
 
@@ -31,10 +31,12 @@ public class Ship : MonoBehaviour {
 		speed = startSpeed;
 		camPos = cam.localPosition;
 		camRot = cam.localRotation;
-		retPos = reticule.localPosition;
-		retRot = reticule.localRotation;
-
 		Screen.lockCursor = true;
+
+		foreach(Renderer o in reticule.gameObject.GetComponentsInChildren<Renderer>())
+		{
+			o.material.renderQueue = 4000; //4000+ is overlay
+		}
 	}
 	
 	// Update is called once per frame
@@ -68,16 +70,34 @@ public class Ship : MonoBehaviour {
 		aimAngle.y += mousey*aimReticuleSpeed;
 		aimAngle.y = Mathf.Max(Mathf.Min(aimAngle.y,45),-45);
 
-		reticule.localPosition = retPos;
-		reticule.localRotation = retRot;
-		reticule.RotateAround(ship.localPosition,transform.up,aimAngle.x);
-		reticule.RotateAround(ship.localPosition,transform.right,-aimAngle.y);
-		reticule.LookAt(cam,transform.up);
-		reticule.Rotate(reticule.right,180);
+		reticule.localPosition += new Vector3(mousex,mousey,0)*aimReticuleSpeed;
+		float xpos = reticule.localPosition.x;
+		float ypos = reticule.localPosition.y;
+		if(xpos*xpos+ypos*ypos > aimRadius*aimRadius)
+		{
+			float angle = Mathf.Atan2(ypos,xpos);
+			xpos = Mathf.Cos(angle)*aimRadius;
+			ypos = Mathf.Sin(angle)*aimRadius;
+		}
+		reticule.localPosition = new Vector3(xpos,ypos,reticule.localPosition.z);
 	}
 
 	void OnGUI() {
 		GUI.Label(new Rect(0,0,100,50),("Speed: "+trueSpeed()));
+		float sides = 32;
+		Vector2? lastPoint = null;
+		for(float x=0;x<=360;x+=360f/sides)
+		{
+			Vector3 point = transform.TransformPoint(new Vector3(aimRadius*Mathf.Cos(Mathf.Deg2Rad*x),aimRadius*Mathf.Sin(Mathf.Deg2Rad*x),reticule.localPosition.z));
+			Vector2 scrPoint = Camera.main.WorldToScreenPoint(point);
+			if(lastPoint == null)
+			{
+				lastPoint = scrPoint;
+				continue;
+			}
+			Drawing.DrawLine(lastPoint.Value,scrPoint,new Color(1,1,1,0.5f),2,false);
+			lastPoint = scrPoint;
+		}
 	}
 
 	float trueSpeed()
