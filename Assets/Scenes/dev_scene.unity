@@ -1031,3 +1031,6 @@ MonoBehaviour:
   aimReticuleSpeed: .5
   aimRadius: 5
   aimUnits: {x: 4.5, y: 4.5}
+  laser: {fileID: 400000, guid: 8aef21d83cdff4cc08a855815b3368c4, type: 2}
+  fireRate: 200
+  laserForce: 1500

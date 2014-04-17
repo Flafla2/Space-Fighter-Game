@@ -21,16 +21,18 @@ public class Ship : MonoBehaviour {
 	public float aimRadius;
 	public Vector2 aimUnits;
 
+	public Transform laser;
+	public int fireRate;
+	public float laserForce;
+
 	private Vector3 camPos;
-	private Quaternion camRot;
 	private float speed;
-	private Vector2 aimAngle;
+	private float lastFireTime;
 
 	// Use this for initialization
 	void Start () {
 		speed = startSpeed;
 		camPos = cam.localPosition;
-		camRot = cam.localRotation;
 		Screen.lockCursor = true;
 
 		foreach(Renderer o in reticule.gameObject.GetComponentsInChildren<Renderer>())
@@ -57,18 +59,8 @@ public class Ship : MonoBehaviour {
 		
 		transform.Translate(Vector3.forward*trueSpeed()*Time.deltaTime,Space.Self);
 
-		cam.localPosition = camPos;
-		cam.localRotation = camRot;
-		cam.RotateAround(ship.localPosition,transform.up,-yawRaw*tilt);
-		cam.RotateAround(ship.localPosition,transform.right,-pitchRaw*tilt);
-
 		float mousex = Input.GetAxis("Mouse X");
 		float mousey = Input.GetAxis("Mouse Y");
-
-		aimAngle.x += mousex*aimReticuleSpeed;
-		aimAngle.x = Mathf.Max(Mathf.Min(aimAngle.x,45),-45);
-		aimAngle.y += mousey*aimReticuleSpeed;
-		aimAngle.y = Mathf.Max(Mathf.Min(aimAngle.y,45),-45);
 
 		reticule.localPosition += new Vector3(mousex,mousey,0)*aimReticuleSpeed;
 		float xpos = reticule.localPosition.x;
@@ -80,6 +72,20 @@ public class Ship : MonoBehaviour {
 			ypos = Mathf.Sin(angle)*aimRadius;
 		}
 		reticule.localPosition = new Vector3(xpos,ypos,reticule.localPosition.z);
+
+		if(Input.GetButton("Fire1") && Time.time-lastFireTime > ((float)fireRate)/1000f)
+		{
+			lastFireTime = Time.time;
+
+			Transform proj = Instantiate(laser) as Transform;
+			proj.position = ship.position;
+			proj.LookAt(reticule);
+			proj.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.Normalize(reticule.position-proj.position)*laserForce);
+		}
+
+		cam.localPosition = camPos;
+		Vector3 retDir = Vector3.Normalize(new Vector3(reticule.localPosition.x,reticule.localPosition.y,3))*tilt;
+		cam.localPosition += retDir;
 	}
 
 	void OnGUI() {
@@ -90,6 +96,7 @@ public class Ship : MonoBehaviour {
 		{
 			Vector3 point = transform.TransformPoint(new Vector3(aimRadius*Mathf.Cos(Mathf.Deg2Rad*x),aimRadius*Mathf.Sin(Mathf.Deg2Rad*x),reticule.localPosition.z));
 			Vector2 scrPoint = Camera.main.WorldToScreenPoint(point);
+			scrPoint.y = Screen.height-scrPoint.y;
 			if(lastPoint == null)
 			{
 				lastPoint = scrPoint;

@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Unlit-Reticule
-  m_Shader: {fileID: 4800000, guid: c5c8b9bf66ea7465683e84e0e4e983ea, type: 3}
+  m_Name: Laser
+  m_Shader: {fileID: 4800000, guid: 03b89bc8e27754bf48b4a362ff8c7b44, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,16 +17,28 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: be181b16f5f814eab818f14961a16003, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats: {}
+    m_Floats:
+      data:
+        first:
+          name: _CorePower
+        second: 0
+      data:
+        first:
+          name: _CoreSup
+        second: 4
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 0, b: 0, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _HideColor
-        second: {r: 1, g: 0, b: 0, a: .0705882385}
+          name: _Core
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Outer
+        second: {r: 0, g: 0, b: 1, a: 1}
