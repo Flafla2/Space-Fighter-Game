@@ -1023,7 +1023,7 @@ MonoBehaviour:
   yawSpeed: 120
   pitchSpeed: 120
   throttleRate: 4
-  tilt: 0
+  tilt: 1
   speedDeadZone: .5
   cam: {fileID: 1788123554}
   ship: {fileID: 335741506}
