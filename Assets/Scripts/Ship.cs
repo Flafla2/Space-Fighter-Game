@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Ship : MonoBehaviour {
 
+	public int player = 0;
+
 	public float maxSpeed;
 	public float minSpeed;
 	public float startSpeed;
@@ -10,12 +12,14 @@ public class Ship : MonoBehaviour {
 	public float yawSpeed;
 	public float pitchSpeed;
 	public float throttleRate;
+	public float descelerateRate;
 	public float tilt;
 	public float speedDeadZone;
 
 	public Transform cam;
 	public Transform ship;
 	public Transform reticule;
+	public Transform deathExplosion;
 
 	public float aimReticuleSpeed; // In Degrees
 	public float aimRadius;
@@ -28,6 +32,7 @@ public class Ship : MonoBehaviour {
 	private Vector3 camPos;
 	private float speed;
 	private float lastFireTime;
+	private bool alive = true;
 
 	// Use this for initialization
 	void Start () {
@@ -43,6 +48,9 @@ public class Ship : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(!alive)
+			return;
+
 		float pitchRaw = Input.GetAxis("Pitch");
 		float yawRaw = Input.GetAxis("Yaw");
 		float rollRaw = Input.GetAxis("Roll");
@@ -54,7 +62,9 @@ public class Ship : MonoBehaviour {
 		transform.Rotate(Vector3.right,pitch,Space.Self);
 		transform.Rotate(Vector3.forward,roll,Space.Self);
 
-		float throttle = Input.GetAxis("Throttle")*throttleRate*Time.deltaTime;
+		float throttle = Input.GetAxis("Throttle")*Time.deltaTime;
+		if(throttle > 0) throttle *= throttleRate;
+		else if(throttle < 0) throttle *= descelerateRate;
 		speed = Mathf.Max(Mathf.Min(speed+throttle,maxSpeed),minSpeed);
 		
 		transform.Translate(Vector3.forward*trueSpeed()*Time.deltaTime,Space.Self);
@@ -80,6 +90,7 @@ public class Ship : MonoBehaviour {
 			Transform proj = Instantiate(laser) as Transform;
 			proj.position = ship.position;
 			proj.LookAt(reticule);
+			proj.gameObject.GetComponent<Laser>().friendlyPlayer = player;
 			proj.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.Normalize(reticule.position-proj.position)*laserForce);
 		}
 
@@ -89,6 +100,9 @@ public class Ship : MonoBehaviour {
 	}
 
 	void OnGUI() {
+		if(!alive)
+			return;
+
 		GUI.Label(new Rect(0,0,100,50),("Speed: "+trueSpeed()));
 		float sides = 32;
 		Vector2? lastPoint = null;
@@ -105,6 +119,23 @@ public class Ship : MonoBehaviour {
 			Drawing.DrawLine(lastPoint.Value,scrPoint,new Color(1,1,1,0.5f),2,false);
 			lastPoint = scrPoint;
 		}
+	}
+
+	void OnTriggerEnter(Collider other) {
+
+		if(other.gameObject.CompareTag("Obstacle"))
+		{
+			alive = false;
+
+			Transform explosion = Instantiate(deathExplosion) as Transform;
+			explosion.position = ship.position;
+
+			Destroy(ship.gameObject);
+			Destroy(reticule.gameObject);
+			foreach(Collider c in GetComponents<Collider>())
+				Destroy(c);
+		}
+
 	}
 
 	float trueSpeed()

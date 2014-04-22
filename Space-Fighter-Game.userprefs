@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Ship.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Shaders/Glowing_Scanline.shader">
     <Files>
-      <File FileName="Assets/Scripts/Ship.cs" Line="99" Column="42" />
-      <File FileName="Assets/Shaders/Laser.shader" Line="11" Column="1" />
-      <File FileName="Assets/Scripts/Laser.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/Ship.cs" Line="131" Column="29" />
+      <File FileName="Assets/Scripts/Laser.cs" Line="11" Column="11" />
+      <File FileName="Assets/Shaders/Glowing_Scanline.shader" Line="15" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
