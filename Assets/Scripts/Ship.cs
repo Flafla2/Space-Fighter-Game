@@ -23,11 +23,12 @@ public class Ship : MonoBehaviour {
 
 	public float aimReticuleSpeed; // In Degrees
 	public float aimRadius;
-	public Vector2 aimUnits;
 
 	public Transform laser;
 	public int fireRate;
 	public float laserForce;
+
+	public GuiManager3D guiManager;
 
 	private Vector3 camPos;
 	private float speed;
@@ -134,6 +135,8 @@ public class Ship : MonoBehaviour {
 			Destroy(reticule.gameObject);
 			foreach(Collider c in GetComponents<Collider>())
 				Destroy(c);
+
+			guiManager.displayMessage("You Died");
 		}
 
 	}

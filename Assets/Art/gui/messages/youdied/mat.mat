@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Scanline
+  m_Name: mat
   m_Shader: {fileID: 4800000, guid: 7bc591cdd8d364f9b9edd80aea9bb615, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
@@ -25,20 +25,28 @@ Material:
         first:
           name: _ScanSize
         second: 2
+    m_Colors:
       data:
         first:
-          name: _ScanIntensity
-        second: 4
-    m_Colors:
+          name: _LightColor
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _ScanIntensity
-        second: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+          name: _Color1
+        second: {r: 1, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _Color2
+        second: {r: 1, g: 1, b: 0, a: 1}
       data:
         first:
           name: _ScanColor
-        second: {r: .196078435, g: .196078435, b: .196078435, a: .694117665}
+        second: {r: .200000003, g: .200000003, b: .200000003, a: .301960796}
+      data:
+        first:
+          name: _LightDirection
+        second: {r: 1, g: 0, b: 1, a: 1}
