@@ -1,13 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RandRotator.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/gui/GuiNetworkSelector.cs">
     <Files>
-      <File FileName="Assets/Scripts/Ship.cs" Line="139" Column="1" />
-      <File FileName="Assets/Scripts/Laser.cs" Line="1" Column="1" />
       <File FileName="Assets/Shaders/Gui_Scanline.shader" Line="1" Column="1" />
-      <File FileName="Assets/Shaders/Laser.shader" Line="13" Column="40" />
-      <File FileName="Assets/Scripts/GuiManager3D.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/RandRotator.cs" Line="45" Column="115" />
+      <File FileName="Assets/Shaders/Laser.shader" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/gui/GuiNetworkSelector.cs" Line="32" Column="46" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
