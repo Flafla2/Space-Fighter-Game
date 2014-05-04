@@ -6,10 +6,14 @@ public class Laser : MonoBehaviour {
 	public int friendlyPlayer = -1;
 
 	void OnTriggerEnter(Collider other) {
-		Ship ship = other.GetComponent<Ship>();
-		if(ship != null && ship.player == friendlyPlayer)
-			return;
-		Destroy (gameObject);
+		if(Network.isServer)
+		{
+			Ship ship = other.GetComponent<Ship>();
+			if(ship != null && ship.player == friendlyPlayer)
+				return;
+			Network.RemoveRPCs(networkView.viewID);
+			Network.Destroy(gameObject);
+		}
 	}
 
 }

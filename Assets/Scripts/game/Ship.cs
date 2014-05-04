@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SpaceGame;
 
 public class Ship : MonoBehaviour {
 
@@ -45,13 +46,23 @@ public class Ship : MonoBehaviour {
 		{
 			o.material.renderQueue = 4000; //4000+ is overlay
 		}
+		
+		if(!IsMine ())
+		{
+			Destroy (reticule.gameObject);
+			Destroy (cam.gameObject);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(!alive)
+		if(!alive || !IsMine())
+		{
+			if(alive)
+				transform.Translate(Vector3.forward*trueSpeed()*Time.deltaTime,Space.Self); // Approximation for high ping
 			return;
-
+		}
+		
 		float pitchRaw = Input.GetAxis("Pitch");
 		float yawRaw = Input.GetAxis("Yaw");
 		float rollRaw = Input.GetAxis("Roll");
@@ -101,7 +112,7 @@ public class Ship : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		if(!alive)
+		if(!alive || !IsMine ())
 			return;
 
 		GUI.Label(new Rect(0,0,100,50),("Speed: "+trueSpeed()));
@@ -123,22 +134,52 @@ public class Ship : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
+		if(!Network.isServer && Network.peerType != NetworkPeerType.Disconnected)
+			return;
 
 		if(other.gameObject.CompareTag("Obstacle"))
 		{
 			alive = false;
 
-			Transform explosion = Instantiate(deathExplosion) as Transform;
+			Transform explosion;
+			if(NetVars.SinglePlayer()) {
+				explosion = Instantiate(deathExplosion,ship.position,Quaternion.identity) as Transform;
+				Destroy(ship.gameObject);
+				Destroy(reticule.gameObject);
+			}
+			else {
+				explosion = Network.Instantiate(deathExplosion,ship.position,Quaternion.identity,0) as Transform;
+				Network.Destroy(ship.gameObject);
+				Network.Destroy(reticule.gameObject);
+			}
 			explosion.position = ship.position;
-
-			Destroy(ship.gameObject);
-			Destroy(reticule.gameObject);
+			
 			foreach(Collider c in GetComponents<Collider>())
 				Destroy(c);
-
-			guiManager.displayMessage("You Died");
+			
+			if(NetVars.SinglePlayer())
+				DisplayMessage("You Died");
+			else
+				networkView.RPC("DisplayMessage",networkView.owner,"You Died");
 		}
-
+	}
+	
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+		if(stream.isWriting) {
+			bool r_alive = alive;
+			stream.Serialize(ref r_alive);
+			
+			float r_speed = speed;
+			stream.Serialize(ref r_speed);
+		} else if(stream.isReading) {
+			bool r_alive = false;
+			stream.Serialize(ref r_alive);
+			alive = r_alive;
+			
+			float r_speed = 0;
+			stream.Serialize(ref r_speed);
+			speed = r_speed;
+		}
 	}
 
 	float trueSpeed()
@@ -146,5 +187,14 @@ public class Ship : MonoBehaviour {
 		if(speed < speedDeadZone && speed > -speedDeadZone)
 			return 0;
 		return speed;
+	}
+	
+	bool IsMine() {
+		return networkView.isMine || NetVars.SinglePlayer();
+	}
+	
+	[RPC]
+	void DisplayMessage(string message) {
+		guiManager.displayMessage(message);
 	}
 }

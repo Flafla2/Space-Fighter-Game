@@ -12,7 +12,7 @@ public class GuiNetworkSelector : MonoBehaviour {
 	private string chat			= "";
 	private string chatBox		= "";
 	private string hostPort		= "25565";
-	private string clientIP		= "127.0.0.1";
+	private string clientIP		= "localhost";
 	private string clientPort	= "25565";
 
 	void OnGUI() {
@@ -137,6 +137,8 @@ public class GuiNetworkSelector : MonoBehaviour {
 		GUI.EndScrollView();
 
 		GUI.Label(new Rect(10,windowArea.height-20,windowArea.width-20,20),("Peer Type: "+Network.peerType.ToString()));
+		if(Network.isServer && GUI.Button(new Rect(windowArea.width-100,windowArea.height-20,100,20),"Start Game"))
+			networkView.RPC("LoadLevel", RPCMode.All, "dev_scene", 1);
 
 		GUI.DragWindow(new Rect(0,0,100000,20));
 	}
@@ -175,6 +177,18 @@ public class GuiNetworkSelector : MonoBehaviour {
 	void RequestMessage(NetworkViewID view, string msg) {
 		if(Network.isServer)
 			networkView.RPC("OnSendChatMessage", RPCMode.AllBuffered, getPlayerID(view.owner).ToString(), msg);
+	}
+
+	[RPC]
+	void LoadLevel(string level, int levelID) {
+		Network.SetSendingEnabled(0,false);
+		Network.isMessageQueueRunning = false;
+
+		Network.SetLevelPrefix(levelID);
+		Application.LoadLevel(level);
+
+		Network.isMessageQueueRunning = true;
+		Network.SetSendingEnabled(0,true);
 	}
 
 	int getPlayerID(NetworkPlayer p) {
