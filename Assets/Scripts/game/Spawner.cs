@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SpaceGame;
 
 public class Spawner : MonoBehaviour {
 	
@@ -20,7 +21,7 @@ public class Spawner : MonoBehaviour {
 				SpawnShip();
 		}
 		
-		if(Network.peerType == NetworkPeerType.Disconnected) SpawnShip();
+		if(NetVars.SinglePlayer() && player == 0) SpawnShip();
 	}
 
 	int UnityNetworkConnection() {
