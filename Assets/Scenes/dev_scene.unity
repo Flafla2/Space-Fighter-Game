@@ -116,6 +116,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 63234503}
   - 114: {fileID: 63234504}
+  - 148: {fileID: 63234505}
   m_Layer: 0
   m_Name: Spawn_2
   m_TagString: Untagged
@@ -148,6 +149,18 @@ MonoBehaviour:
   player: 2
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+--- !u!148 &63234505
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 63234502}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 63234503}
+  m_ViewID:
+    m_ID: 3
+    m_Type: 1
 --- !u!1 &149561902
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +239,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 301029559}
   - 114: {fileID: 301029560}
+  - 148: {fileID: 301029561}
   m_Layer: 0
   m_Name: Spawn_1
   m_TagString: Untagged
@@ -258,6 +272,18 @@ MonoBehaviour:
   player: 1
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+--- !u!148 &301029561
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 301029558}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 301029559}
+  m_ViewID:
+    m_ID: 2
+    m_Type: 1
 --- !u!1 &338011974
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,6 +404,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 444511324}
   - 114: {fileID: 444511323}
+  - 148: {fileID: 444511325}
   m_Layer: 0
   m_Name: Spawn_0
   m_TagString: Untagged
@@ -410,6 +437,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 11938009}
+--- !u!148 &444511325
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 444511322}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 444511324}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!1 &446481559
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,6 +554,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 727137799}
   - 114: {fileID: 727137800}
+  - 148: {fileID: 727137801}
   m_Layer: 0
   m_Name: Spawn_5
   m_TagString: Untagged
@@ -547,6 +587,18 @@ MonoBehaviour:
   player: 5
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+--- !u!148 &727137801
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 727137798}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 727137799}
+  m_ViewID:
+    m_ID: 5
+    m_Type: 1
 --- !u!1 &770608419
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,6 +884,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1100262795}
   - 114: {fileID: 1100262794}
+  - 148: {fileID: 1100262796}
   m_Layer: 0
   m_Name: Spawn_4
   m_TagString: Untagged
@@ -864,6 +917,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 11938009}
+--- !u!148 &1100262796
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1100262793}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 1100262795}
+  m_ViewID:
+    m_ID: 4
+    m_Type: 1
 --- !u!1 &1187728172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,6 +1389,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1688876451}
   - 114: {fileID: 1688876452}
+  - 148: {fileID: 1688876453}
   m_Layer: 0
   m_Name: Spawn_3
   m_TagString: Untagged
@@ -1356,6 +1422,18 @@ MonoBehaviour:
   player: 3
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+--- !u!148 &1688876453
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1688876450}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 1688876451}
+  m_ViewID:
+    m_ID: 6
+    m_Type: 1
 --- !u!1 &1694515504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,6 +1443,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1694515505}
   - 114: {fileID: 1694515506}
+  - 148: {fileID: 1694515507}
   m_Layer: 0
   m_Name: Spawn_6
   m_TagString: Untagged
@@ -1397,6 +1476,18 @@ MonoBehaviour:
   player: 6
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+--- !u!148 &1694515507
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1694515504}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 1694515505}
+  m_ViewID:
+    m_ID: 7
+    m_Type: 1
 --- !u!1 &1851371948
 GameObject:
   m_ObjectHideFlags: 0
