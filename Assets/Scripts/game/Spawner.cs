@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if(Network.isServer) {
-			if(player >= 0) {
+			if(UnityNetworkConnection() >= 0) {
 				for(int x=0;x<Network.connections.Length;x++) {
 					if(Network.connections[x] == networkView.owner) {
 						networkView.RPC ("SpawnShip",Network.connections[x]);
@@ -21,6 +21,10 @@ public class Spawner : MonoBehaviour {
 		}
 		
 		if(Network.peerType == NetworkPeerType.Disconnected) SpawnShip();
+	}
+
+	int UnityNetworkConnection() {
+		return player-1;
 	}
 	
 	[RPC]
