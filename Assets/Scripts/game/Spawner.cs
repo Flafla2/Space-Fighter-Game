@@ -31,10 +31,11 @@ public class Spawner : MonoBehaviour {
 	[RPC]
 	void SpawnShip() {
 		Ship ship;
-		if(Network.peerType == NetworkPeerType.Disconnected)
+		if(NetVars.SinglePlayer())
 			ship = (Instantiate(shipPrefab,transform.position,Quaternion.identity) as Transform).GetComponent<Ship>();
 		else
 			ship = (Network.Instantiate(shipPrefab,transform.position,Quaternion.identity,0) as Transform).GetComponent<Ship>();
 		ship.guiManager = guiManager;
+		ship.player = player;
 	}
 }

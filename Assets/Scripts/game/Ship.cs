@@ -134,7 +134,7 @@ public class Ship : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if(!Network.isServer && Network.peerType != NetworkPeerType.Disconnected)
+		if(!Network.isServer && !NetVars.SinglePlayer())
 			return;
 
 		if(other.gameObject.CompareTag("Obstacle"))
@@ -157,7 +157,7 @@ public class Ship : MonoBehaviour {
 			foreach(Collider c in GetComponents<Collider>())
 				Destroy(c);
 			
-			if(NetVars.SinglePlayer())
+			if(NetVars.SinglePlayer() || networkView.isMine)
 				DisplayMessage("You Died");
 			else
 				networkView.RPC("DisplayMessage",networkView.owner,"You Died");
