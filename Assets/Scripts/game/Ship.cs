@@ -35,16 +35,12 @@ public class Ship : MonoBehaviour {
 	private float speed;
 	private float lastFireTime;
 	private bool alive = true;
-	private Vector3 rotVelocity;
-	private Vector3 lastRot;// Used for client-side approximation
-	private float lastRotTime;
+	private Vector3 rawRot = Vector3.zero; // Used for network approximation
 
 	// Use this for initialization
 	void Start () {
 		speed = startSpeed;
 		camPos = cam.localPosition;
-		lastRot = transform.rotation.eulerAngles;
-		lastRotTime = Time.time;
 		Screen.lockCursor = true;
 
 		foreach(Renderer o in reticule.gameObject.GetComponentsInChildren<Renderer>())
@@ -65,7 +61,10 @@ public class Ship : MonoBehaviour {
 		{
 			if(alive)
 			{
-				transform.Rotate(rotVelocity*Time.deltaTime);
+				transform.Rotate(Vector3.up,rawRot.y,Space.Self);
+				transform.Rotate(Vector3.right,rawRot.x,Space.Self);
+				transform.Rotate(Vector3.forward,rawRot.z,Space.Self);
+				
 				transform.Translate(Vector3.forward*trueSpeed()*Time.deltaTime,Space.Self); // Approximation for high ping
 			}
 			return;
@@ -77,6 +76,8 @@ public class Ship : MonoBehaviour {
 		float pitch	= pitchRaw	*pitchSpeed	*Time.deltaTime;
 		float yaw	= yawRaw	*yawSpeed	*Time.deltaTime;
 		float roll	= rollRaw	*rollSpeed	*Time.deltaTime;
+		
+		rawRot = new Vector3(pitch,yaw,roll);
 
 		transform.Rotate(Vector3.up,yaw,Space.Self);
 		transform.Rotate(Vector3.right,pitch,Space.Self);
@@ -106,7 +107,6 @@ public class Ship : MonoBehaviour {
 		if(Input.GetButton("Fire1") && Time.time-lastFireTime > ((float)fireRate)/1000f)
 		{
 			lastFireTime = Time.time;
-
 			Transform proj;
 			if(NetVars.SinglePlayer())
 				proj = Instantiate(laser,ship.position,Quaternion.identity) as Transform;
@@ -148,31 +148,12 @@ public class Ship : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if(!Network.isServer && !NetVars.SinglePlayer())
 			return;
-
 		if(other.gameObject.CompareTag("Obstacle"))
 		{
-			alive = false;
-
-			Transform explosion;
-			if(NetVars.SinglePlayer()) {
-				explosion = Instantiate(deathExplosion,ship.position,Quaternion.identity) as Transform;
-				Destroy(ship.gameObject);
-				Destroy(reticule.gameObject);
-			}
-			else {
-				explosion = Network.Instantiate(deathExplosion,ship.position,Quaternion.identity,0) as Transform;
-				Network.Destroy(ship.gameObject);
-				Destroy(reticule.gameObject);
-			}
-			explosion.position = ship.position;
-			
-			foreach(Collider c in GetComponents<Collider>())
-				Destroy(c);
-			
-			if(NetVars.SinglePlayer() || networkView.isMine)
-				DisplayMessage("You Died");
+			if(IsMine())
+				Kill ();
 			else
-				networkView.RPC("DisplayMessage",networkView.owner,"You Died");
+				networkView.RPC ("Kill",networkView.owner);
 		}
 	}
 	
@@ -184,8 +165,11 @@ public class Ship : MonoBehaviour {
 			float r_speed = speed;
 			stream.Serialize(ref r_speed);
 			
-			Vector3 r_rot = transform.rotation.eulerAngles;
+			Vector3 r_rot = rawRot;
 			stream.Serialize(ref r_rot);
+			
+			int r_player = player;
+			stream.Serialize(ref r_player);
 		} else if(stream.isReading) {
 			bool r_alive = false;
 			stream.Serialize(ref r_alive);
@@ -197,12 +181,11 @@ public class Ship : MonoBehaviour {
 			
 			Vector3 r_rot = Vector3.zero;
 			stream.Serialize(ref r_rot);
+			rawRot = r_rot;
 			
-			float elapsed = Time.time-lastRotTime;
-			rotVelocity = (r_rot-lastRot)/elapsed;
-			
-			lastRot = r_rot;
-			lastRotTime = Time.time;
+			int r_player = 0;
+			stream.Serialize(ref r_player);
+			player = r_player;
 		}
 	}
 
@@ -220,5 +203,32 @@ public class Ship : MonoBehaviour {
 	[RPC]
 	void DisplayMessage(string message) {
 		guiManager.displayMessage(message);
+	}
+	
+	[RPC]
+	void Kill() {
+		alive = false;
+			
+		Transform explosion;
+		if(NetVars.SinglePlayer()) {
+			explosion = Instantiate(deathExplosion,ship.position,Quaternion.identity) as Transform;
+			Destroy(ship.gameObject);
+			Destroy(reticule.gameObject);
+		}
+		else {
+			Vector3 shipPos = ship.position;
+			explosion = Network.Instantiate(deathExplosion,shipPos,Quaternion.identity,0) as Transform;
+			Network.Destroy(ship.gameObject);
+			Destroy(reticule.gameObject);
+		}
+		explosion.position = ship.position;
+		
+		foreach(Collider c in GetComponents<Collider>())
+			Destroy(c);
+		
+		if(IsMine ())
+			DisplayMessage("You Died");
+		else
+			networkView.RPC("DisplayMessage",networkView.owner,"You Died");
 	}
 }

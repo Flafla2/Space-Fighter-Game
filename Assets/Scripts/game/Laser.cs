@@ -20,5 +20,23 @@ public class Laser : MonoBehaviour {
 			Network.Destroy(gameObject);
 		}
 	}
+	
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+		if(stream.isWriting) {
+			float r_velocity = velocity;
+			stream.Serialize(ref r_velocity);
+			
+			int r_friendlyPlayer = friendlyPlayer;
+			stream.Serialize(ref r_friendlyPlayer);
+		} else if(stream.isReading) {
+			float r_velocity = 0;
+			stream.Serialize(ref r_velocity);
+			velocity = r_velocity;
+			
+			int r_friendlyPlayer = 0;
+			stream.Serialize(ref r_friendlyPlayer);
+			friendlyPlayer = r_friendlyPlayer;
+		}
+	}
 
 }
