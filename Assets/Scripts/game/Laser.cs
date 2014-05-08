@@ -4,6 +4,11 @@ using System.Collections;
 public class Laser : MonoBehaviour {
 
 	public int friendlyPlayer = -1;
+	public float velocity;
+	
+	void Update() {
+		transform.Translate(Vector3.forward*velocity*Time.deltaTime,Space.Self);
+	}
 
 	void OnTriggerEnter(Collider other) {
 		if(Network.isServer)

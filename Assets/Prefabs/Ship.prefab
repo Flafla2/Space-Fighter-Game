@@ -417,7 +417,7 @@ MonoBehaviour:
   aimRadius: 5
   laser: {fileID: 400000, guid: 8aef21d83cdff4cc08a855815b3368c4, type: 2}
   fireRate: 100
-  laserForce: 3000
+  laserVelocity: 5
   guiManager: {fileID: 0}
 --- !u!124 &12400000
 Behaviour:

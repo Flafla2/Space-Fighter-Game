@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using SpaceGame;
 
@@ -27,7 +27,7 @@ public class Ship : MonoBehaviour {
 
 	public Transform laser;
 	public int fireRate;
-	public float laserForce;
+	public float laserVelocity;
 
 	public GuiManager3D guiManager;
 
@@ -35,11 +35,16 @@ public class Ship : MonoBehaviour {
 	private float speed;
 	private float lastFireTime;
 	private bool alive = true;
+	private Vector3 rotVelocity;
+	private Vector3 lastRot;// Used for client-side approximation
+	private float lastRotTime;
 
 	// Use this for initialization
 	void Start () {
 		speed = startSpeed;
 		camPos = cam.localPosition;
+		lastRot = transform.rotation.eulerAngles;
+		lastRotTime = Time.time;
 		Screen.lockCursor = true;
 
 		foreach(Renderer o in reticule.gameObject.GetComponentsInChildren<Renderer>())
@@ -59,7 +64,10 @@ public class Ship : MonoBehaviour {
 		if(!alive || !IsMine())
 		{
 			if(alive)
+			{
+				transform.Rotate(rotVelocity*Time.deltaTime);
 				transform.Translate(Vector3.forward*trueSpeed()*Time.deltaTime,Space.Self); // Approximation for high ping
+			}
 			return;
 		}
 		
@@ -99,11 +107,15 @@ public class Ship : MonoBehaviour {
 		{
 			lastFireTime = Time.time;
 
-			Transform proj = Instantiate(laser) as Transform;
-			proj.position = ship.position;
+			Transform proj;
+			if(NetVars.SinglePlayer())
+				proj = Instantiate(laser,ship.position,Quaternion.identity) as Transform;
+			else
+				proj = Network.Instantiate(laser, ship.position, Quaternion.identity, 0) as Transform;
+			
 			proj.LookAt(reticule);
 			proj.gameObject.GetComponent<Laser>().friendlyPlayer = player;
-			proj.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.Normalize(reticule.position-proj.position)*laserForce);
+			proj.gameObject.GetComponent<Laser>().velocity = laserVelocity;
 		}
 
 		cam.localPosition = camPos;
@@ -150,7 +162,7 @@ public class Ship : MonoBehaviour {
 			else {
 				explosion = Network.Instantiate(deathExplosion,ship.position,Quaternion.identity,0) as Transform;
 				Network.Destroy(ship.gameObject);
-				Network.Destroy(reticule.gameObject);
+				Destroy(reticule.gameObject);
 			}
 			explosion.position = ship.position;
 			
@@ -171,6 +183,9 @@ public class Ship : MonoBehaviour {
 			
 			float r_speed = speed;
 			stream.Serialize(ref r_speed);
+			
+			Vector3 r_rot = transform.rotation.eulerAngles;
+			stream.Serialize(ref r_rot);
 		} else if(stream.isReading) {
 			bool r_alive = false;
 			stream.Serialize(ref r_alive);
@@ -179,6 +194,15 @@ public class Ship : MonoBehaviour {
 			float r_speed = 0;
 			stream.Serialize(ref r_speed);
 			speed = r_speed;
+			
+			Vector3 r_rot = Vector3.zero;
+			stream.Serialize(ref r_rot);
+			
+			float elapsed = Time.time-lastRotTime;
+			rotVelocity = (r_rot-lastRot)/elapsed;
+			
+			lastRot = r_rot;
+			lastRotTime = Time.time;
 		}
 	}
 

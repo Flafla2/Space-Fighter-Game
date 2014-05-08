@@ -181,6 +181,7 @@ public class GuiNetworkSelector : MonoBehaviour {
 
 	[RPC]
 	void LoadLevel(string level, int levelID) {
+		Debug.Log ("Loading level ("+levelID+"): "+level);
 		Network.SetSendingEnabled(0,false);
 		Network.isMessageQueueRunning = false;
 

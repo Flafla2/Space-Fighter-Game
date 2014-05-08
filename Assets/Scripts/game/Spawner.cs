@@ -12,11 +12,8 @@ public class Spawner : MonoBehaviour {
 	void Start () {
 		if(Network.isServer) {
 			if(UnityNetworkConnection() >= 0) {
-				for(int x=0;x<Network.connections.Length;x++) {
-					if(Network.connections[x] == networkView.owner) {
-						networkView.RPC ("SpawnShip",Network.connections[x]);
-					}
-				}
+				if(UnityNetworkConnection() < Network.connections.Length)
+					networkView.RPC ("SpawnShip",Network.connections[UnityNetworkConnection()]);
 			} else
 				SpawnShip();
 		}
@@ -30,6 +27,7 @@ public class Spawner : MonoBehaviour {
 	
 	[RPC]
 	void SpawnShip() {
+		Debug.Log("Spawning Ship");
 		Ship ship;
 		if(NetVars.SinglePlayer())
 			ship = (Instantiate(shipPrefab,transform.position,Quaternion.identity) as Transform).GetComponent<Ship>();
