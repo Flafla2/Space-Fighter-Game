@@ -16,7 +16,9 @@ public class Ship : MonoBehaviour {
 	public float descelerateRate;
 	public float tilt;
 	public float speedDeadZone;
-
+	
+	public float health = 1;
+	
 	public Transform cam;
 	public Transform ship;
 	public Transform reticule;
@@ -30,11 +32,13 @@ public class Ship : MonoBehaviour {
 	public float laserVelocity;
 
 	public GuiManager3D guiManager;
+	public string debug_msg = "";
 
 	private Vector3 camPos;
 	private float speed;
 	private float lastFireTime;
 	private bool alive = true;
+	private float respawnTime = -1;
 	private Vector3 rawRot = Vector3.zero; // Used for network approximation
 
 	// Use this for initialization
@@ -67,6 +71,12 @@ public class Ship : MonoBehaviour {
 				
 				transform.Translate(Vector3.forward*trueSpeed()*Time.deltaTime,Space.Self); // Approximation for high ping
 			}
+			
+			return;
+		}
+		
+		if(health <= 0) {
+			Kill();
 			return;
 		}
 		
@@ -103,20 +113,15 @@ public class Ship : MonoBehaviour {
 			ypos = Mathf.Sin(angle)*aimRadius;
 		}
 		reticule.localPosition = new Vector3(xpos,ypos,reticule.localPosition.z);
-
-		if(Input.GetButton("Fire1") && Time.time-lastFireTime > ((float)fireRate)/1000f)
-		{
+		
+		if(Input.GetButton("Fire1") && Time.time-lastFireTime > ((float)fireRate)/1000f) {
 			lastFireTime = Time.time;
-			Transform proj;
-			if(NetVars.SinglePlayer())
-				proj = Instantiate(laser,ship.position,Quaternion.identity) as Transform;
+			if(NetVars.Authority())
+				Shoot (reticule.position);
 			else
-				proj = Network.Instantiate(laser, ship.position, Quaternion.identity, 0) as Transform;
-			
-			proj.LookAt(reticule);
-			proj.gameObject.GetComponent<Laser>().friendlyPlayer = player;
-			proj.gameObject.GetComponent<Laser>().velocity = laserVelocity;
+				networkView.RPC("Shoot",RPCMode.Server,reticule.position);
 		}
+			
 
 		cam.localPosition = camPos;
 		Vector3 retDir = Vector3.Normalize(new Vector3(reticule.localPosition.x,reticule.localPosition.y,3))*tilt;
@@ -124,10 +129,27 @@ public class Ship : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		if(!alive || !IsMine ())
+		if(!IsMine ())
 			return;
+			
+		if(!alive) {
+			if(Screen.lockCursor) Screen.lockCursor = false;
+			if(Time.time < respawnTime) {
+				GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
+				labelStyle.alignment = TextAnchor.MiddleCenter;
+				GUI.Label(new Rect(0,0,Screen.width,Screen.height),("Respawn in "+(int)(respawnTime-Time.time)),labelStyle);
+			} else if(GUI.Button(new Rect(Screen.width/2-100,Screen.height/2-50,200,100),"RESPAWN")) {
+				if(NetVars.SinglePlayer())
+					Destroy(gameObject);
+				else
+					Network.Destroy(gameObject);
+				Spawner.Respawn(player);
+			}
+			return;
+		} else if(!Screen.lockCursor) Screen.lockCursor = true;
 
 		GUI.Label(new Rect(0,0,100,50),("Speed: "+trueSpeed()));
+		GUI.Label(new Rect(0,50,100,50),("Health: "+(health*100)));
 		float sides = 32;
 		Vector2? lastPoint = null;
 		for(float x=0;x<=360;x+=360f/sides)
@@ -143,17 +165,19 @@ public class Ship : MonoBehaviour {
 			Drawing.DrawLine(lastPoint.Value,scrPoint,new Color(1,1,1,0.5f),2,false);
 			lastPoint = scrPoint;
 		}
+		
+		GUI.Label(new Rect(Screen.width-100,0,100,500),debug_msg);
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if(!Network.isServer && !NetVars.SinglePlayer())
+		if(!NetVars.Authority())
 			return;
 		if(other.gameObject.CompareTag("Obstacle"))
 		{
 			if(IsMine())
-				Kill ();
+				Kill();
 			else
-				networkView.RPC ("Kill",networkView.owner);
+				networkView.RPC("Kill",networkView.owner);
 		}
 	}
 	
@@ -196,7 +220,7 @@ public class Ship : MonoBehaviour {
 		return speed;
 	}
 	
-	bool IsMine() {
+	public bool IsMine() {
 		return networkView.isMine || NetVars.SinglePlayer();
 	}
 	
@@ -208,6 +232,7 @@ public class Ship : MonoBehaviour {
 	[RPC]
 	void Kill() {
 		alive = false;
+		respawnTime = Time.time+5;
 			
 		Transform explosion;
 		if(NetVars.SinglePlayer()) {
@@ -230,5 +255,24 @@ public class Ship : MonoBehaviour {
 			DisplayMessage("You Died");
 		else
 			networkView.RPC("DisplayMessage",networkView.owner,"You Died");
+	}
+	
+	[RPC]
+	void Shoot(Vector3 aim) {
+		Transform proj;
+		if(NetVars.SinglePlayer())
+			proj = Instantiate(laser,ship.position,Quaternion.identity) as Transform;
+		else
+			proj = Network.Instantiate(laser, ship.position, Quaternion.identity, 0) as Transform;
+		
+		proj.LookAt(aim);
+		proj.gameObject.GetComponent<Laser>().friendlyPlayer = player;
+		proj.gameObject.GetComponent<Laser>().velocity = laserVelocity;
+		debug_msg += "bam!\n";
+	}
+	
+	[RPC]
+	public void Damage(float percent) {
+		health -= percent;
 	}
 }

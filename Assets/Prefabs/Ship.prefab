@@ -416,9 +416,10 @@ MonoBehaviour:
   aimReticuleSpeed: .5
   aimRadius: 5
   laser: {fileID: 400000, guid: 8aef21d83cdff4cc08a855815b3368c4, type: 2}
-  fireRate: 100
-  laserVelocity: 5
+  fireRate: 200
+  laserVelocity: 40
   guiManager: {fileID: 0}
+  debug_msg: 
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1

@@ -15,7 +15,7 @@ public class GuiManager3D : MonoBehaviour {
 	public void displayMessage(string name)
 	{
 		if(currentMessage != null) {
-			Destroy(currentMessage);
+			Destroy(currentMessage.gameObject);
 			currentMessage = null;
 		}
 
@@ -29,6 +29,13 @@ public class GuiManager3D : MonoBehaviour {
 		}
 		else
 			Debug.LogError("Error: Invalid Message Name Given!");
+	}
+	
+	public void clearMessages() {
+		if(currentMessage != null) {
+			Destroy(currentMessage.gameObject);
+			currentMessage = null;
+		}
 	}
 
 	private int indexOfName(string name) {

@@ -1,12 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using SpaceGame;
 
 public class Spawner : MonoBehaviour {
+
+	public static List<Spawner> AllSpawners = new List<Spawner>();
 	
 	public int player = 0;
 	public Transform shipPrefab;
 	public GuiManager3D guiManager;
+	
+	public static void Respawn(int player) {
+		foreach(Spawner s in AllSpawners) {
+			if(s.player == player) {
+				s.guiManager.clearMessages();
+				if(NetVars.IsMine(s.networkView))
+					s.SpawnShip();
+				else
+					s.networkView.RPC("SpawnShip",Network.connections[s.UnityNetworkConnection()]);
+			}
+		}
+	}
 	
 	// Use this for initialization
 	void Start () {
@@ -19,9 +34,11 @@ public class Spawner : MonoBehaviour {
 		}
 		
 		if(NetVars.SinglePlayer() && player == 0) SpawnShip();
+		
+		AllSpawners.Add(this);
 	}
 
-	int UnityNetworkConnection() {
+	public int UnityNetworkConnection() {
 		return player-1;
 	}
 	

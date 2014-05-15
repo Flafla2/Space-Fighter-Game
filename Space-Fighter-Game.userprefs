@@ -1,10 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/game/Ship.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/game/Spawner.cs">
     <Files>
-      <File FileName="Assets/Scripts/game/Ship.cs" Line="163" Column="5" />
-      <File FileName="Assets/Scripts/Spawner.cs" Line="23" Column="54" />
-      <File FileName="Assets/Scripts/lib/NetVars.cs" Line="2" Column="1" />
+      <File FileName="Assets/Scripts/game/Ship.cs" Line="206" Column="2" />
+      <File FileName="Assets/Scripts/lib/NetVars.cs" Line="16" Column="21" />
+      <File FileName="Assets/Scripts/game/Laser.cs" Line="21" Column="18" />
+      <File FileName="Assets/Scripts/game/Spawner.cs" Line="18" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
