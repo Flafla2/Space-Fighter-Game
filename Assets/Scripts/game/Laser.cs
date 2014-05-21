@@ -4,7 +4,7 @@ using SpaceGame;
 
 public class Laser : MonoBehaviour {
 
-	public int friendlyPlayer = -1;
+	public Player friendlyPlayer;
 	public float velocity;
 	
 	void Update() {
@@ -37,16 +37,17 @@ public class Laser : MonoBehaviour {
 			float r_velocity = velocity;
 			stream.Serialize(ref r_velocity);
 			
-			int r_friendlyPlayer = friendlyPlayer;
+			NetworkPlayer r_friendlyPlayer = friendlyPlayer.UnityPlayer;
 			stream.Serialize(ref r_friendlyPlayer);
 		} else if(stream.isReading) {
 			float r_velocity = 0;
 			stream.Serialize(ref r_velocity);
 			velocity = r_velocity;
 			
-			int r_friendlyPlayer = 0;
+			NetworkPlayer r_friendlyPlayer = new NetworkPlayer();
 			stream.Serialize(ref r_friendlyPlayer);
-			friendlyPlayer = r_friendlyPlayer;
+			if(!friendlyPlayer.UnityPlayer.Equals(r_friendlyPlayer))
+				friendlyPlayer = new Player(r_friendlyPlayer,friendlyPlayer.nickname);
 		}
 	}
 

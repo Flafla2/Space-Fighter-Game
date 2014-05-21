@@ -7,18 +7,19 @@ public class Spawner : MonoBehaviour {
 
 	public static List<Spawner> AllSpawners = new List<Spawner>();
 	
-	public int player = 0;
+	public Player player;
 	public Transform shipPrefab;
 	public GuiManager3D guiManager;
+	public bool singleplayerSpawn = false;
 	
-	public static void Respawn(int player) {
+	public static void Respawn(Player player) {
 		foreach(Spawner s in AllSpawners) {
 			if(s.player == player) {
 				s.guiManager.clearMessages();
 				if(NetVars.IsMine(s.networkView))
 					s.SpawnShip();
 				else
-					s.networkView.RPC("SpawnShip",Network.connections[s.UnityNetworkConnection()]);
+					s.networkView.RPC("SpawnShip",s.player.UnityPlayer);
 			}
 		}
 	}
@@ -26,20 +27,13 @@ public class Spawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if(Network.isServer) {
-			if(UnityNetworkConnection() >= 0) {
-				if(UnityNetworkConnection() < Network.connections.Length)
-					networkView.RPC ("SpawnShip",Network.connections[UnityNetworkConnection()]);
-			} else
-				SpawnShip();
-		}
+			networkView.RPC ("SpawnShip",player.UnityPlayer);
+		} else
+			SpawnShip();
 		
-		if(NetVars.SinglePlayer() && player == 0) SpawnShip();
+		if(NetVars.SinglePlayer() && singleplayerSpawn) SpawnShip();
 		
 		AllSpawners.Add(this);
-	}
-
-	public int UnityNetworkConnection() {
-		return player-1;
 	}
 	
 	[RPC]

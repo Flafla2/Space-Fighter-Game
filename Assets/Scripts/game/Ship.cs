@@ -4,8 +4,6 @@ using SpaceGame;
 
 public class Ship : MonoBehaviour {
 
-	public int player = 0;
-
 	public float maxSpeed;
 	public float minSpeed;
 	public float startSpeed;
@@ -40,12 +38,15 @@ public class Ship : MonoBehaviour {
 	private bool alive = true;
 	private float respawnTime = -1;
 	private Vector3 rawRot = Vector3.zero; // Used for network approximation
+	
+	public Player player;
 
 	// Use this for initialization
 	void Start () {
 		speed = startSpeed;
 		camPos = cam.localPosition;
 		Screen.lockCursor = true;
+		player = NetVars.getPlayer(networkView.owner);
 
 		foreach(Renderer o in reticule.gameObject.GetComponentsInChildren<Renderer>())
 		{
@@ -192,7 +193,7 @@ public class Ship : MonoBehaviour {
 			Vector3 r_rot = rawRot;
 			stream.Serialize(ref r_rot);
 			
-			int r_player = player;
+			NetworkPlayer r_player = player.UnityPlayer;
 			stream.Serialize(ref r_player);
 		} else if(stream.isReading) {
 			bool r_alive = false;
@@ -207,9 +208,10 @@ public class Ship : MonoBehaviour {
 			stream.Serialize(ref r_rot);
 			rawRot = r_rot;
 			
-			int r_player = 0;
+			NetworkPlayer r_player = new NetworkPlayer();
 			stream.Serialize(ref r_player);
-			player = r_player;
+			if(!player.UnityPlayer.Equals(r_player))
+				player = new Player(r_player,player.nickname);
 		}
 	}
 

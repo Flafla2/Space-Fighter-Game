@@ -1,11 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/game/Spawner.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/gui/GuiNetworkSelector.cs">
     <Files>
-      <File FileName="Assets/Scripts/game/Ship.cs" Line="206" Column="2" />
-      <File FileName="Assets/Scripts/lib/NetVars.cs" Line="16" Column="21" />
-      <File FileName="Assets/Scripts/game/Laser.cs" Line="21" Column="18" />
-      <File FileName="Assets/Scripts/game/Spawner.cs" Line="18" Column="8" />
+      <File FileName="Assets/Scripts/gui/GuiNetworkSelector.cs" Line="108" Column="52" />
+      <File FileName="Assets/Scripts/game/NetworkHandler.cs" Line="40" Column="40" />
+      <File FileName="Assets/Scripts/lib/NetVars.cs" Line="13" Column="40" />
+      <File FileName="Assets/Scripts/game/Player.cs" Line="7" Column="9" />
+      <File FileName="Assets/Scripts/game/Ship.cs" Line="197" Column="33" />
+      <File FileName="Assets/Scripts/game/Laser.cs" Line="40" Column="4" />
+      <File FileName="Assets/Scripts/game/Spawner.cs" Line="33" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

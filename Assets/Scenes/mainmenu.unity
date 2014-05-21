@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 053cd46f54c5240ec9462bf6d06cb11f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  handler: {fileID: 1713933888}
 --- !u!148 &302138862
 NetworkView:
   m_ObjectHideFlags: 0
@@ -178,4 +179,61 @@ NetworkView:
   m_Observed: {fileID: 0}
   m_ViewID:
     m_ID: 1
+    m_Type: 1
+--- !u!1 &1713933887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1713933889}
+  - 114: {fileID: 1713933888}
+  - 148: {fileID: 1713933890}
+  m_Layer: 0
+  m_Name: Network Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1713933888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1713933887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d331538b2e8644bbc8495e8c9f264773, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  log: 'Space Game V0.1 Alpha - NETWORK LOG
+
+
+'
+  chat: 
+  chatEnabled: 0
+--- !u!4 &1713933889
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1713933887}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!148 &1713933890
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1713933887}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 1713933888}
+  m_ViewID:
+    m_ID: 2
     m_Type: 1
