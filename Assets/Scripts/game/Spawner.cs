@@ -17,9 +17,9 @@ public class Spawner : MonoBehaviour {
 			if(s.player == player) {
 				s.guiManager.clearMessages();
 				if(NetVars.IsMine(s.networkView))
-					s.SpawnShip();
+					s.SpawnShip(player.UnityPlayer);
 				else
-					s.networkView.RPC("SpawnShip",s.player.UnityPlayer);
+					s.networkView.RPC("SpawnShip",s.player.UnityPlayer,player.UnityPlayer);
 			}
 		}
 	}
@@ -27,17 +27,33 @@ public class Spawner : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if(Network.isServer) {
-			networkView.RPC ("SpawnShip",player.UnityPlayer);
-		} else
-			SpawnShip();
+			foreach(Player p in NetVars.players) { // TODO: Update this check for when new players are added
+				if(player == null && !CheckForPlayer(p)) {
+					if(Network.isServer) {
+						networkView.RPC ("SpawnShip",RPCMode.All,p.UnityPlayer);
+					}
+				}
+			}
+		}
 		
-		if(NetVars.SinglePlayer() && singleplayerSpawn) SpawnShip();
+		if(NetVars.SinglePlayer() && singleplayerSpawn) SpawnShip(Network.player);
 		
 		AllSpawners.Add(this);
 	}
 	
+	static bool CheckForPlayer(Player p) {
+		foreach(Spawner s in AllSpawners) {
+			if(s.player.Equals(p)) return true;
+		}
+		return false;
+	}
+	
 	[RPC]
-	void SpawnShip() {
+	void SpawnShip(NetworkPlayer p) {
+		player = NetVars.getPlayer(p);
+		
+		if(!p.Equals(Network.player)) return;
+		
 		Debug.Log("Spawning Ship");
 		Ship ship;
 		if(NetVars.SinglePlayer())

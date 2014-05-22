@@ -210,8 +210,8 @@ public class Ship : MonoBehaviour {
 			
 			NetworkPlayer r_player = new NetworkPlayer();
 			stream.Serialize(ref r_player);
-			if(!player.UnityPlayer.Equals(r_player))
-				player = new Player(r_player,player.nickname);
+			if(player == null || !player.UnityPlayer.Equals(r_player))
+				player = NetVars.getPlayer(r_player);
 		}
 	}
 
