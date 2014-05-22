@@ -128,4 +128,11 @@ public class NetworkHandler : MonoBehaviour {
 		Network.isMessageQueueRunning = true;
 		Network.SetSendingEnabled(0,true);
 	}
+	
+	[RPC]
+	void ChangeNick(NetworkPlayer player, string nick) {
+		Player p = NetVars.getPlayer(player);
+		chat += "<GAME> Player "+p.nickname+" changed name to "+nick+"\n";
+		p.nickname = nick;
+	}
 }

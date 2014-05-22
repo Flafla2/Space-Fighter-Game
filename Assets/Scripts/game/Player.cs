@@ -19,6 +19,7 @@ namespace SpaceGame {
 		public Player(NetworkPlayer player, string nickname = DEFAULT_NICK) {
 			this.unityPlayer = player;
 			this.nickname = nickname;
+			Debug.Log("Nick: "+nickname);
 		}
 		
 		public bool Equals(Player p) {

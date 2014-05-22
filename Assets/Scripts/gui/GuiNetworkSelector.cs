@@ -11,6 +11,8 @@ public class GuiNetworkSelector : MonoBehaviour {
 	private Vector2 logScroll	= new Vector2(0,0);
 	private Vector2 chatScroll 	= new Vector2(0,0);
 	private string chatBox		= "";
+	private string nickBox		= "";
+	private string currentNick	= "";
 	private string hostPort		= "25565";
 	private string clientIP		= "localhost";
 	private string clientPort	= "25565";
@@ -39,6 +41,21 @@ public class GuiNetworkSelector : MonoBehaviour {
 				handler.RequestMessage(networkView.viewID,chatBox);
 			chatBox = "";
 		}
+		
+		if(currentNick.Equals(""))
+			currentNick = NetVars.getPlayer(Network.player).nickname;
+		
+		GUI.SetNextControlName("namebox");
+		labelSize = GUI.skin.label.CalcSize(new GUIContent("Change Name"));
+		GUI.Label(new Rect(200,20,chatArea.width-200,20),"Change Name");
+		nickBox = GUI.TextField(new Rect(200,20+labelSize.y,chatArea.width-200,20),nickBox);
+		if(GUI.GetNameOfFocusedControl().CompareTo("namebox") == 0 && (Event.current.isKey && Event.current.keyCode == KeyCode.Return) && !nickBox.Trim().Equals(""))
+		{
+			handler.networkView.RPC ("ChangeNick", RPCMode.All, Network.player, nickBox);
+			nickBox = "";
+			currentNick = NetVars.getPlayer(Network.player).nickname;
+		}
+		GUI.Label(new Rect(200,40+labelSize.y,chatArea.width-200,20),currentNick);
 
 		GUI.DragWindow(new Rect(0,0,100000,20));
 	}
@@ -112,6 +129,7 @@ public class GuiNetworkSelector : MonoBehaviour {
 	
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
 		chatBox = "";
+		nickBox = "";
 		chatScroll = Vector2.zero;
 	}
 	
