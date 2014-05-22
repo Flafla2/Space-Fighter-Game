@@ -25,7 +25,7 @@ public class Laser : MonoBehaviour {
 			}
 			if(NetVars.SinglePlayer())
 				Destroy(gameObject);
-			else {
+			else if(enabled) {
 				Network.RemoveRPCs(networkView.viewID);
 				Network.Destroy(gameObject);
 			}
@@ -46,7 +46,9 @@ public class Laser : MonoBehaviour {
 			
 			NetworkPlayer r_friendlyPlayer = new NetworkPlayer();
 			stream.Serialize(ref r_friendlyPlayer);
-			if(!friendlyPlayer.UnityPlayer.Equals(r_friendlyPlayer))
+			if(friendlyPlayer == null)
+				friendlyPlayer = NetVars.getPlayer(r_friendlyPlayer);
+			else if(!friendlyPlayer.UnityPlayer.Equals(r_friendlyPlayer))
 				friendlyPlayer = new Player(r_friendlyPlayer,friendlyPlayer.nickname);
 		}
 	}

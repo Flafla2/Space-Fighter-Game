@@ -155,6 +155,8 @@ public class Ship : MonoBehaviour {
 		Vector2? lastPoint = null;
 		for(float x=0;x<=360;x+=360f/sides)
 		{
+			if(transform == null) Debug.Log("Transform == null");
+			if(reticule == null) Debug.Log ("reticule == null");
 			Vector3 point = transform.TransformPoint(new Vector3(aimRadius*Mathf.Cos(Mathf.Deg2Rad*x),aimRadius*Mathf.Sin(Mathf.Deg2Rad*x),reticule.localPosition.z));
 			Vector2 scrPoint = Camera.main.WorldToScreenPoint(point);
 			scrPoint.y = Screen.height-scrPoint.y;
