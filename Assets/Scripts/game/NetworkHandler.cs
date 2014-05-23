@@ -113,7 +113,7 @@ public class NetworkHandler : MonoBehaviour {
 	[RPC]
 	public void RequestMessage(NetworkViewID view, string msg) {
 		if(Network.isServer)
-			networkView.RPC("OnSendChatMessage", RPCMode.All, NetVars.getPlayer(networkView.owner).nickname, msg);
+			networkView.RPC("OnSendChatMessage", RPCMode.All, NetVars.getPlayer(view.owner).nickname, msg);
 	}
 	
 	[RPC]

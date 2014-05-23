@@ -21,7 +21,8 @@ public class Ship : MonoBehaviour {
 	public Transform ship;
 	public Transform reticule;
 	public Transform deathExplosion;
-
+	public Transform tagRoot;
+	
 	public float aimReticuleSpeed; // In Degrees
 	public float aimRadius;
 
@@ -130,6 +131,13 @@ public class Ship : MonoBehaviour {
 	}
 
 	void OnGUI() {
+		if(!IsMine() && GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main),tagRoot.GetComponent<Collider>().bounds)) {
+			Vector3 tagPos = Camera.main.WorldToScreenPoint(tagRoot.position);
+			GUIStyle centered = new GUIStyle(GUI.skin.label);
+			centered.alignment = TextAnchor.MiddleCenter;
+			GUI.Label(new Rect(tagPos.x-100,(Screen.height-tagPos.y)-60, 200, 20), player.nickname, centered);
+		}
+		
 		if(!IsMine ())
 			return;
 			

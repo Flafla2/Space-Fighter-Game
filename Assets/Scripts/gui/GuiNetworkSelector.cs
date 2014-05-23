@@ -16,6 +16,11 @@ public class GuiNetworkSelector : MonoBehaviour {
 	private string hostPort		= "25565";
 	private string clientIP		= "localhost";
 	private string clientPort	= "25565";
+	
+	void Update() {
+		if(!NetVars.SinglePlayer())
+			currentNick = NetVars.getPlayer(Network.player).nickname;
+	}
 
 	void OnGUI() {
 		windowArea = GUI.Window(0,windowArea,WindowFunction,"Find a Game");
@@ -53,7 +58,6 @@ public class GuiNetworkSelector : MonoBehaviour {
 		{
 			handler.networkView.RPC ("ChangeNick", RPCMode.All, Network.player, nickBox);
 			nickBox = "";
-			currentNick = NetVars.getPlayer(Network.player).nickname;
 		}
 		GUI.Label(new Rect(200,40+labelSize.y,chatArea.width-200,20),currentNick);
 
