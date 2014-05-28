@@ -14,20 +14,23 @@ public class Laser : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if(NetVars.Authority())
 		{
-			Ship ship = other.GetComponent<Ship>();
-			if(ship != null && ship.player == friendlyPlayer)
+			Ship ship = other.gameObject.GetComponent<Ship>();
+			if((ship == null && !other.gameObject.tag.Equals("Obstacle")) || (ship != null && ship.player.Equals(friendlyPlayer)))
 				return;
+			
 			if(ship != null) {
 				if(!ship.IsMine())
 					ship.networkView.RPC("Damage",ship.networkView.owner,0.1f);
 				else
 					ship.Damage(0.1f);
 			}
+			
 			if(NetVars.SinglePlayer())
 				Destroy(gameObject);
 			else if(enabled) {
 				Network.RemoveRPCs(networkView.viewID);
 				Network.Destroy(gameObject);
+				Debug.Log("DESTROY");
 			}
 		}
 	}
@@ -46,10 +49,10 @@ public class Laser : MonoBehaviour {
 			
 			NetworkPlayer r_friendlyPlayer = new NetworkPlayer();
 			stream.Serialize(ref r_friendlyPlayer);
-			if(friendlyPlayer == null)
+			if(friendlyPlayer == null || !friendlyPlayer.UnityPlayer.Equals(r_friendlyPlayer))
 				friendlyPlayer = NetVars.getPlayer(r_friendlyPlayer);
-			else if(!friendlyPlayer.UnityPlayer.Equals(r_friendlyPlayer))
-				friendlyPlayer = new Player(r_friendlyPlayer,friendlyPlayer.nickname);
+//			else if(!friendlyPlayer.UnityPlayer.Equals(r_friendlyPlayer))
+//				friendlyPlayer = new Player(r_friendlyPlayer,friendlyPlayer.nickname);
 		}
 	}
 

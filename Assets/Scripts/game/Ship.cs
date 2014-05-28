@@ -104,16 +104,27 @@ public class Ship : MonoBehaviour {
 
 		float mousex = Input.GetAxis("Mouse X");
 		float mousey = Input.GetAxis("Mouse Y");
+		
+		float joyx = Input.GetAxis("Joystick Aim X");
+		float joyy = Input.GetAxis("Joystick Aim Y");
 
 		reticule.localPosition += new Vector3(mousex,mousey,0)*aimReticuleSpeed;
+		Vector3 joyLocPos = reticule.localPosition;
+		if(joyx != 0)
+			joyLocPos.x = joyx*aimRadius;
+		if(joyy != 0)
+			joyLocPos.y = joyy*aimRadius;
+		reticule.localPosition = joyLocPos;
 		float xpos = reticule.localPosition.x;
 		float ypos = reticule.localPosition.y;
+		
 		if(xpos*xpos+ypos*ypos > aimRadius*aimRadius)
 		{
 			float angle = Mathf.Atan2(ypos,xpos);
 			xpos = Mathf.Cos(angle)*aimRadius;
 			ypos = Mathf.Sin(angle)*aimRadius;
 		}
+		
 		reticule.localPosition = new Vector3(xpos,ypos,reticule.localPosition.z);
 		
 		if(Input.GetButton("Fire1") && Time.time-lastFireTime > ((float)fireRate)/1000f) {

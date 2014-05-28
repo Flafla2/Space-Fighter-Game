@@ -38,7 +38,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Fire1
-    descriptiveName: 
+    descriptiveName: Fire
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: left ctrl
@@ -86,8 +86,8 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: Roll
-    descriptiveName: 
-    descriptiveNegativeName: 
+    descriptiveName: Roll Clockwise
+    descriptiveNegativeName: Roll Counterclockwise
     negativeButton: e
     positiveButton: q
     altNegativeButton: 
@@ -158,6 +158,118 @@ InputManager:
     altPositiveButton: '[1]'
     gravity: 3
     dead: .189999998
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Yaw
+    descriptiveName: Joystick Turn Right
+    descriptiveNegativeName: Joystick Turn Left
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 2
+    axis: 2
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Pitch
+    descriptiveName: Joystick Turn Upward
+    descriptiveNegativeName: Joystick Turn Downward
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 2
+    axis: 3
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Roll
+    descriptiveName: Joystick Roll CW
+    descriptiveNegativeName: Joystick Roll CCW
+    negativeButton: joystick button 8
+    positiveButton: joystick button 9
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Joystick Aim X
+    descriptiveName: Joystick Aim X
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 2
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Joystick Aim Y
+    descriptiveName: Joystick Aim Y
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 2
+    axis: 1
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Throttle
+    descriptiveName: Joystick Increase Throttle
+    descriptiveNegativeName: Joystick Decrease Throttle
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .189999998
+    sensitivity: 3
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Fire1
+    descriptiveName: Joystick Fire
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 14
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: .00100000005
     sensitivity: 3
     snap: 1
     invert: 0
