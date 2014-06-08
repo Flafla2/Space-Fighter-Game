@@ -56,7 +56,7 @@ public class GuiNetworkSelector : MonoBehaviour {
 		nickBox = GUI.TextField(new Rect(200,20+labelSize.y,chatArea.width-200,20),nickBox);
 		if(GUI.GetNameOfFocusedControl().CompareTo("namebox") == 0 && (Event.current.isKey && Event.current.keyCode == KeyCode.Return) && !nickBox.Trim().Equals(""))
 		{
-			handler.networkView.RPC ("ChangeNick", RPCMode.All, Network.player, nickBox);
+			handler.networkView.RPC ("ChangeNick", RPCMode.AllBuffered, Network.player, nickBox);
 			nickBox = "";
 		}
 		GUI.Label(new Rect(200,40+labelSize.y,chatArea.width-200,20),currentNick);

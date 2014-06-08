@@ -142,7 +142,7 @@ public class Ship : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		if(!IsMine() && GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main),tagRoot.GetComponent<Collider>().bounds)) {
+		if(!IsMine() && (Camera.main != null && GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main),tagRoot.GetComponent<Collider>().bounds))) {
 			Vector3 tagPos = Camera.main.WorldToScreenPoint(tagRoot.position);
 			GUIStyle centered = new GUIStyle(GUI.skin.label);
 			centered.alignment = TextAnchor.MiddleCenter;
@@ -192,8 +192,9 @@ public class Ship : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if(!NetVars.Authority())
 			return;
-		if(other.gameObject.CompareTag("Obstacle"))
+		if(other.gameObject.CompareTag("Obstacle") && alive)
 		{
+			alive = false;
 			if(IsMine())
 				Kill();
 			else
@@ -252,6 +253,7 @@ public class Ship : MonoBehaviour {
 	
 	[RPC]
 	void Kill() {
+		if(!alive) return;
 		alive = false;
 		respawnTime = Time.time+5;
 			

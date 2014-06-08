@@ -146,9 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eefcefd62a6e495cb30819e65f93b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: 2
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+  singleplayerSpawn: 0
 --- !u!148 &63234505
 NetworkView:
   m_ObjectHideFlags: 0
@@ -269,9 +269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eefcefd62a6e495cb30819e65f93b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: 1
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+  singleplayerSpawn: 0
 --- !u!148 &301029561
 NetworkView:
   m_ObjectHideFlags: 0
@@ -423,9 +423,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eefcefd62a6e495cb30819e65f93b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: 0
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+  singleplayerSpawn: 1
 --- !u!4 &444511324
 Transform:
   m_ObjectHideFlags: 0
@@ -584,9 +584,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eefcefd62a6e495cb30819e65f93b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: 5
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+  singleplayerSpawn: 0
 --- !u!148 &727137801
 NetworkView:
   m_ObjectHideFlags: 0
@@ -903,9 +903,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eefcefd62a6e495cb30819e65f93b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: 4
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+  singleplayerSpawn: 0
 --- !u!4 &1100262795
 Transform:
   m_ObjectHideFlags: 0
@@ -1419,9 +1419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eefcefd62a6e495cb30819e65f93b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: 3
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+  singleplayerSpawn: 0
 --- !u!148 &1688876453
 NetworkView:
   m_ObjectHideFlags: 0
@@ -1473,9 +1473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eefcefd62a6e495cb30819e65f93b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: 6
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
+  singleplayerSpawn: 0
 --- !u!148 &1694515507
 NetworkView:
   m_ObjectHideFlags: 0

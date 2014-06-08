@@ -30,7 +30,6 @@ public class Laser : MonoBehaviour {
 			else if(enabled) {
 				Network.RemoveRPCs(networkView.viewID);
 				Network.Destroy(gameObject);
-				Debug.Log("DESTROY");
 			}
 		}
 	}
