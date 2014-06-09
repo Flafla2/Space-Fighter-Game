@@ -16,12 +16,9 @@ public class Spawner : MonoBehaviour {
 		foreach(Spawner s in AllSpawners) {
 			if(s.player != null && s.player.Equals(player)) {
 				s.guiManager.clearMessages();
-				if(NetVars.IsMine(s.networkView))
-					s.SpawnShip(player.UnityPlayer);
-				else {
-					Debug.Log (s.networkView.viewID);
-					s.networkView.RPC("SpawnShip",s.player.UnityPlayer,player.UnityPlayer);
-				}
+				
+				s.networkView.RPC("SpawnShip",RPCMode.All,player.UnityPlayer);
+
 			}
 		}
 	}

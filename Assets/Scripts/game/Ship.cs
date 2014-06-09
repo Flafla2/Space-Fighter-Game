@@ -194,11 +194,12 @@ public class Ship : MonoBehaviour {
 			return;
 		if(other.gameObject.CompareTag("Obstacle") && alive)
 		{
-			alive = false;
 			if(IsMine())
 				Kill();
-			else
+			else {
+				//alive = false;
 				networkView.RPC("Kill",networkView.owner);
+			}
 		}
 	}
 	
