@@ -1,4 +1,4 @@
-﻿Shader "Custom/Diffuse (No Depth)" {
+﻿Shader "Custom/Unlit (No Depth)" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
 		_HideColor ("Hidden Color", Color) = (1,1,1,0.5)

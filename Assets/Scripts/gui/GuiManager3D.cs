@@ -37,6 +37,10 @@ public class GuiManager3D : MonoBehaviour {
 			currentMessage = null;
 		}
 	}
+	
+	public void setShield(float shield) {
+	
+	}
 
 	private int indexOfName(string name) {
 		for(int x=0;x<messageNames.Length;x++) {
