@@ -14,8 +14,11 @@ public class Ship : MonoBehaviour {
 	public float descelerateRate;
 	public float tilt;
 	public float speedDeadZone;
+	public float shieldRegenWait = 2;
+	public float shieldRegenRate = 0.5f;
 	
 	public float health = 1;
+	public float shield = 1;
 	
 	public Transform cam;
 	public Transform ship;
@@ -31,6 +34,7 @@ public class Ship : MonoBehaviour {
 	public float laserVelocity;
 
 	public GuiManager3D guiManager;
+	public HealthBar healthBar;
 	public string debug_msg = "";
 
 	private Vector3 camPos;
@@ -39,6 +43,7 @@ public class Ship : MonoBehaviour {
 	private bool alive = true;
 	private float respawnTime = -1;
 	private Vector3 rawRot = Vector3.zero; // Used for network approximation
+	private float lastHitTime = 0;
 	
 	public Player player;
 
@@ -58,6 +63,17 @@ public class Ship : MonoBehaviour {
 		{
 			Destroy (reticule.gameObject);
 			Destroy (cam.gameObject);
+			Destroy (healthBar.gameObject);
+		} else {
+			//Position health bar
+			Ray ray = Camera.main.ScreenPointToRay(new Vector3(100,Screen.height-100,0));
+			Plane plane = new Plane(transform.forward,healthBar.gameObject.transform.position);
+			
+			float d = 0;
+			if(plane.Raycast(ray,out d))
+				healthBar.gameObject.transform.position = ray.GetPoint(d);
+				
+			GameObjectUtils.SetLayerRecursively(gameObject,9); // Ignore Reticle
 		}
 	}
 	
@@ -80,6 +96,12 @@ public class Ship : MonoBehaviour {
 		if(health <= 0) {
 			Kill();
 			return;
+		}
+		
+		if(shield < 1 && Time.time-lastHitTime > shieldRegenWait)
+		{
+			shield = Mathf.Min(1,shield+Time.deltaTime*shieldRegenRate);
+			healthBar.setShield(shield);
 		}
 		
 		float pitchRaw = Input.GetAxis("Pitch");
@@ -129,10 +151,19 @@ public class Ship : MonoBehaviour {
 		
 		if(Input.GetButton("Fire1") && Time.time-lastFireTime > ((float)fireRate)/1000f) {
 			lastFireTime = Time.time;
+			
+			Ray ray = new Ray(cam.position,reticule.position-cam.position);
+			RaycastHit hit = new RaycastHit();
+			Vector3 aim;
+			int mask = ~((1 << 9) | (1 << 2));
+			
+			if(Physics.Raycast(ray, out hit, Mathf.Infinity, mask)) {
+				aim = hit.point;
+			} else aim = ray.GetPoint(1000);
 			if(NetVars.Authority())
-				Shoot (reticule.position);
+				Shoot (aim);
 			else
-				networkView.RPC("Shoot",RPCMode.Server,reticule.position);
+				networkView.RPC("Shoot",RPCMode.Server,aim);
 		}
 			
 
@@ -169,7 +200,7 @@ public class Ship : MonoBehaviour {
 		} else if(!Screen.lockCursor) Screen.lockCursor = true;
 
 		GUI.Label(new Rect(0,0,100,50),("Speed: "+trueSpeed()));
-		GUI.Label(new Rect(0,50,100,50),("Health: "+(health*100)));
+		//GUI.Label(new Rect(0,50,100,50),("Health: "+(health*100)));
 		float sides = 32;
 		Vector2? lastPoint = null;
 		for(float x=0;x<=360;x+=360f/sides)
@@ -210,7 +241,7 @@ public class Ship : MonoBehaviour {
 			
 			float r_speed = speed;
 			stream.Serialize(ref r_speed);
-			
+						
 			Vector3 r_rot = rawRot;
 			stream.Serialize(ref r_rot);
 			
@@ -292,11 +323,20 @@ public class Ship : MonoBehaviour {
 		proj.LookAt(aim);
 		proj.gameObject.GetComponent<Laser>().friendlyPlayer = player;
 		proj.gameObject.GetComponent<Laser>().velocity = laserVelocity;
-		debug_msg += "bam!\n";
 	}
 	
 	[RPC]
 	public void Damage(float percent) {
-		health -= percent;
+		shield -= percent;
+		if(shield < 0)
+		{
+			health += shield;
+			shield = 0;
+		}
+		
+		healthBar.setHealth(health);
+		healthBar.setShield(shield);
+		
+		lastHitTime = Time.time;
 	}
 }

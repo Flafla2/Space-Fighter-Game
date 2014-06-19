@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: health
-  m_Shader: {fileID: 4800000, guid: 95cc5748a203945c6b94a439b11259ed, type: 3}
+  m_Shader: {fileID: 4800000, guid: c5c8b9bf66ea7465683e84e0e4e983ea, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -20,9 +20,29 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats: {}
+    m_Floats:
+      data:
+        first:
+          name: _Shininess
+        second: .699999988
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: 1, g: .264705896, b: .264705896, a: 1}
+        second: {r: .536764741, g: .616632879, b: 1, a: .427450985}
+      data:
+        first:
+          name: _SpecColor
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _HideColor
+        second: {r: .541176498, g: .647058845, b: .984313726, a: .427450985}
+      data:
+        first:
+          name: _Emission
+        second: {r: 0, g: 0, b: 0, a: 0}
+      data:
+        first:
+          name: _Ambient
+        second: {r: .441176474, g: .60689652, b: 1, a: 1}

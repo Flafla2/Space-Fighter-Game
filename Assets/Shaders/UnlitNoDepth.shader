@@ -9,20 +9,21 @@
 		Tags {"Queue"="Overlay" "IgnoreProjector"="True" "RenderType"="Transparent"}
 		LOD 200
 		
-		ZTest LEqual
-
-		CGPROGRAM								// First Pass - In front of other objects
+		ZTest Greater
+		ZWrite On
+				
+		CGPROGRAM								// Second pass - Behind other objects
 		#pragma surface surf NoLighting alpha
 		
 		sampler2D _MainTex;
-		fixed4 _Color;
+		fixed4 _HideColor;
 
 		struct Input {
 			float2 uv_MainTex;
 		};
 
 		void surf (Input IN, inout SurfaceOutput o) {
-			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _HideColor;
 			o.Albedo = c.rgb;
 			o.Alpha = c.a;
 		}
@@ -37,20 +38,21 @@
 	    
 		ENDCG
 		
-		ZTest Greater
-
-		CGPROGRAM								// Second pass - Behind other objects
+		ZTest LEqual
+		ZWrite Off
+		
+		CGPROGRAM								// First Pass - In front of other objects
 		#pragma surface surf NoLighting alpha
 		
 		sampler2D _MainTex;
-		fixed4 _HideColor;
+		fixed4 _Color;
 
 		struct Input {
 			float2 uv_MainTex;
 		};
 
 		void surf (Input IN, inout SurfaceOutput o) {
-			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _HideColor;
+			fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 			o.Albedo = c.rgb;
 			o.Alpha = c.a;
 		}

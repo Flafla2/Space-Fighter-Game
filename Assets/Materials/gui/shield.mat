@@ -25,8 +25,8 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .177876294, g: .361390382, b: .514705896, a: 1}
+        second: {r: 0, g: .468712062, b: .860294104, a: .392156869}
       data:
         first:
           name: _HideColor
-        second: {r: .176470593, g: .360784322, b: .513725519, a: 1}
+        second: {r: 0, g: .215686277, b: .396078438, a: 1}
