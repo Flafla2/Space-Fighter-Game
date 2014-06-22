@@ -644,7 +644,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &6500000
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -742,8 +742,8 @@ MonoBehaviour:
   aimReticuleSpeed: .5
   aimRadius: 5
   laser: {fileID: 400000, guid: 8aef21d83cdff4cc08a855815b3368c4, type: 2}
-  fireRate: 200
-  laserVelocity: 40
+  fireRate: 100
+  laserVelocity: 100
   guiManager: {fileID: 0}
   healthBar: {fileID: 11400004}
   debug_msg: 

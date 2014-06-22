@@ -148,7 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
-  singleplayerSpawn: 0
 --- !u!148 &63234505
 NetworkView:
   m_ObjectHideFlags: 0
@@ -177,7 +176,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &149561903
 Transform:
@@ -271,7 +270,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
-  singleplayerSpawn: 0
 --- !u!148 &301029561
 NetworkView:
   m_ObjectHideFlags: 0
@@ -342,7 +340,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &423022702
 Renderer:
@@ -425,7 +423,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
-  singleplayerSpawn: 1
 --- !u!4 &444511324
 Transform:
   m_ObjectHideFlags: 0
@@ -465,7 +462,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &446481560
 Renderer:
@@ -658,7 +655,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
-  singleplayerSpawn: 0
 --- !u!148 &727137801
 NetworkView:
   m_ObjectHideFlags: 0
@@ -687,7 +683,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &770608420
 Transform:
@@ -756,7 +752,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &772839510
 Renderer:
@@ -825,7 +821,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &826814513
 Transform:
@@ -894,7 +890,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &849225474
 Renderer:
@@ -947,6 +943,45 @@ Transform:
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children: []
   m_Father: {fileID: 1425096011}
+--- !u!1 &1031162594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1031162596}
+  - 114: {fileID: 1031162595}
+  m_Layer: 0
+  m_Name: Scene Redirector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1031162595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1031162594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb34b417c74e4d0f9272f7eefc81c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToRedirect: 0
+--- !u!4 &1031162596
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1031162594}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.05609226, y: 5.77840996, z: 13.1505899}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
 --- !u!1 &1100262793
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +1012,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
-  singleplayerSpawn: 0
 --- !u!4 &1100262795
 Transform:
   m_ObjectHideFlags: 0
@@ -1017,7 +1051,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &1187728173
 Renderer:
@@ -1160,7 +1194,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1397239342
 Transform:
@@ -1226,7 +1260,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1425096011
 Transform:
@@ -1261,7 +1295,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1463493981
 Transform:
@@ -1330,7 +1364,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1566044447
 Transform:
@@ -1399,7 +1433,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &1572774560
 Renderer:
@@ -1493,7 +1527,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
-  singleplayerSpawn: 0
 --- !u!148 &1688876453
 NetworkView:
   m_ObjectHideFlags: 0
@@ -1547,7 +1580,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 400012, guid: 35bda428d9aab4fc385d88eee77bdb67, type: 2}
   guiManager: {fileID: 338011976}
-  singleplayerSpawn: 0
 --- !u!148 &1694515507
 NetworkView:
   m_ObjectHideFlags: 0
@@ -1576,7 +1608,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1851371949
 Transform:
@@ -1704,7 +1736,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1959541447
 Transform:
@@ -1803,7 +1835,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &2053349060
 Renderer:

@@ -10,7 +10,6 @@ public class Spawner : MonoBehaviour {
 	public Player player;
 	public Transform shipPrefab;
 	public GuiManager3D guiManager;
-	public bool singleplayerSpawn = false;
 	
 	public static void Respawn(Player player) {
 		foreach(Spawner s in AllSpawners) {
@@ -34,9 +33,7 @@ public class Spawner : MonoBehaviour {
 				}
 			}
 		}
-		
-		if(NetVars.SinglePlayer() && singleplayerSpawn) SpawnShip(Network.player);
-		
+				
 		AllSpawners.Add(this);
 	}
 	
@@ -55,10 +52,7 @@ public class Spawner : MonoBehaviour {
 		
 		Debug.Log("Spawning Ship");
 		Ship ship;
-		if(NetVars.SinglePlayer())
-			ship = (Instantiate(shipPrefab,transform.position,Quaternion.identity) as Transform).GetComponent<Ship>();
-		else
-			ship = (Network.Instantiate(shipPrefab,transform.position,Quaternion.identity,0) as Transform).GetComponent<Ship>();
+		ship = (Network.Instantiate(shipPrefab,transform.position,Quaternion.identity,0) as Transform).GetComponent<Ship>();
 		ship.guiManager = guiManager;
 		ship.player = player;
 	}

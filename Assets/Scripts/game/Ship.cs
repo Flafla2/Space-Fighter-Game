@@ -190,10 +190,7 @@ public class Ship : MonoBehaviour {
 				labelStyle.alignment = TextAnchor.MiddleCenter;
 				GUI.Label(new Rect(0,0,Screen.width,Screen.height),("Respawn in "+(int)(respawnTime-Time.time)),labelStyle);
 			} else if(GUI.Button(new Rect(Screen.width/2-100,Screen.height/2-50,200,100),"RESPAWN")) {
-				if(NetVars.SinglePlayer())
-					Destroy(gameObject);
-				else
-					Network.Destroy(gameObject);
+				Network.Destroy(gameObject);
 				Spawner.Respawn(player);
 			}
 			return;
@@ -275,7 +272,7 @@ public class Ship : MonoBehaviour {
 	}
 	
 	public bool IsMine() {
-		return networkView.isMine || NetVars.SinglePlayer();
+		return networkView.isMine;
 	}
 	
 	[RPC]
@@ -290,17 +287,10 @@ public class Ship : MonoBehaviour {
 		respawnTime = Time.time+5;
 			
 		Transform explosion;
-		if(NetVars.SinglePlayer()) {
-			explosion = Instantiate(deathExplosion,ship.position,Quaternion.identity) as Transform;
-			Destroy(ship.gameObject);
-			Destroy(reticule.gameObject);
-		}
-		else {
-			Vector3 shipPos = ship.position;
-			explosion = Network.Instantiate(deathExplosion,shipPos,Quaternion.identity,0) as Transform;
-			Network.Destroy(ship.gameObject);
-			Destroy(reticule.gameObject);
-		}
+		Vector3 shipPos = ship.position;
+		explosion = Network.Instantiate(deathExplosion,shipPos,Quaternion.identity,0) as Transform;
+		Network.Destroy(ship.gameObject);
+		Destroy(reticule.gameObject);
 		explosion.position = ship.position;
 		
 		foreach(Collider c in GetComponents<Collider>())
@@ -315,10 +305,7 @@ public class Ship : MonoBehaviour {
 	[RPC]
 	void Shoot(Vector3 aim) {
 		Transform proj;
-		if(NetVars.SinglePlayer())
-			proj = Instantiate(laser,ship.position,Quaternion.identity) as Transform;
-		else
-			proj = Network.Instantiate(laser, ship.position, Quaternion.identity, 0) as Transform;
+		proj = Network.Instantiate(laser, ship.position, Quaternion.identity, 0) as Transform;
 		
 		proj.LookAt(aim);
 		proj.gameObject.GetComponent<Laser>().friendlyPlayer = player;

@@ -18,8 +18,7 @@ public class GuiNetworkSelector : MonoBehaviour {
 	private string clientPort	= "25565";
 	
 	void Update() {
-		if(!NetVars.SinglePlayer())
-			currentNick = NetVars.getPlayer(Network.player).nickname;
+		currentNick = NetVars.getPlayer(Network.player).nickname;
 	}
 
 	void OnGUI() {

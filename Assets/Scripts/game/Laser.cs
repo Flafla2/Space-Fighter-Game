@@ -26,9 +26,7 @@ public class Laser : MonoBehaviour {
 					ship.Damage(0.1f);
 			}
 			
-			if(NetVars.SinglePlayer())
-				Destroy(gameObject);
-			else if(enabled) {
+			if(enabled) {
 				Network.RemoveRPCs(networkView.viewID);
 				Network.Destroy(gameObject);
 			}
