@@ -12,6 +12,7 @@ public class Laser : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
+		Debug.Log(other.gameObject.name);
 		if(NetVars.Authority())
 		{
 			Ship ship = other.gameObject.GetComponent<Ship>();
