@@ -188,7 +188,7 @@ public class Ship : MonoBehaviour {
 			if(Time.time < respawnTime) {
 				GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
 				labelStyle.alignment = TextAnchor.MiddleCenter;
-				GUI.Label(new Rect(0,0,Screen.width,Screen.height),("Respawn in "+(int)(respawnTime-Time.time)),labelStyle);
+				GUI.Label(new Rect(0,0,Screen.width,Screen.height),("Respawn in "+(int)(respawnTime-Time.time+1)),labelStyle);
 			} else if(GUI.Button(new Rect(Screen.width/2-100,Screen.height/2-50,200,100),"RESPAWN")) {
 				Network.Destroy(gameObject);
 				Spawner.Respawn(player);
@@ -291,6 +291,7 @@ public class Ship : MonoBehaviour {
 		explosion = Network.Instantiate(deathExplosion,shipPos,Quaternion.identity,0) as Transform;
 		Network.Destroy(ship.gameObject);
 		Destroy(reticule.gameObject);
+		Destroy(healthBar.gameObject);
 		explosion.position = ship.position;
 		
 		foreach(Collider c in GetComponents<Collider>())
