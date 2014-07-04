@@ -6,25 +6,76 @@ ModelImporter:
     100000: Cockpit
     100002: //RootNode
     100004: Plane
+    100006: Ship_Body
+    100008: Ship_Body_Curve_backup
+    100010: Sphere
+    100012: Cockpit_Curve
+    100014: Cockpit_Plane_Mesh
+    100016: Ship_Body_Curve
+    100018: Ship_Body_Plane_Mesh_Backup
+    100020: Ship_Body_No_Guns
+    100022: Weapon_Bottom
+    100024: Weapon_Top
     400000: Cockpit
     400002: //RootNode
     400004: Plane
+    400006: Ship_Body
+    400008: Ship_Body_Curve_backup
+    400010: Sphere
+    400012: Cockpit_Curve
+    400014: Cockpit_Plane_Mesh
+    400016: Ship_Body_Curve
+    400018: Ship_Body_Plane_Mesh_Backup
+    400020: Ship_Body_No_Guns
+    400022: Weapon_Bottom
+    400024: Weapon_Top
     2300000: Cockpit
     2300002: Plane
+    2300004: Ship_Body
+    2300006: Ship_Body_Curve_backup
+    2300008: Sphere
+    2300010: Cockpit_Curve
+    2300012: Cockpit_Plane_Mesh
+    2300014: Ship_Body_Curve
+    2300016: Ship_Body_Plane_Mesh_Backup
+    2300018: Ship_Body_No_Guns
+    2300020: Weapon_Bottom
+    2300022: Weapon_Top
     3300000: Cockpit
     3300002: Plane
+    3300004: Ship_Body
+    3300006: Ship_Body_Curve_backup
+    3300008: Sphere
+    3300010: Cockpit_Curve
+    3300012: Cockpit_Plane_Mesh
+    3300014: Ship_Body_Curve
+    3300016: Ship_Body_Plane_Mesh_Backup
+    3300018: Ship_Body_No_Guns
+    3300020: Weapon_Bottom
+    3300022: Weapon_Top
     4300000: Plane
     4300002: Cockpit
+    4300004: Ship_Body
+    4300006: Sphere
+    4300008: Ship_Body_Curve_backup
+    4300010: Ship_Body_Plane_Mesh_Backup
+    4300012: Ship_Body_Curve
+    4300014: Cockpit_Curve
+    4300016: Cockpit_Plane_Mesh
+    4300018: Weapon_Bottom
+    4300020: Weapon_Top
+    4300022: Ship_Body_No_Guns
     7400000: Default Take
     9500000: //RootNode
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     optimizeGameObjects: 0
+    motionNodeName: 
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
@@ -67,6 +118,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   additionalBone: 0
   userData: 
